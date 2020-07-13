@@ -3,6 +3,8 @@ import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import BitcoinDetails from '../views/BitcoinDetails.vue'
 import BitcoinUmrechner from '../views/BitcoinUmrechner'
+import BitcoinDiagramm from '../views/BitcoinDiagramm'
+import MeineBitcoin from '../views/MeineBitcoin'
 Vue.use(VueRouter);
 
 const routes = [
@@ -29,6 +31,16 @@ const routes = [
         path: '/bitcoinUmrechner',
         name: 'BitcoinUmrechner',
         component: BitcoinUmrechner
+    },
+    {
+        path: '/meinebitcoin',
+        name: 'MeineBitcoin',
+        component: MeineBitcoin
+    },
+    {
+        path: '/bitcoinDiagramm',
+        name: 'BitcoinDiagramm',
+        component: BitcoinDiagramm
     },
 ];
 

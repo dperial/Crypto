@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <app-navigation></app-navigation>
+        <AppNavigation></AppNavigation>
         <v-main>
             <v-container fluid>
                 <router-view></router-view>

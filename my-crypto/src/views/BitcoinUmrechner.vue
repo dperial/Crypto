@@ -53,9 +53,10 @@
                                     required
                                     solo
                                     @input="prependIconCallback"
+                                    readonly
                                   >
                                   <!-- <v-icon slot="prepend-inner" color="red">{{icn}}</v-icon> -->
-                                  <v-img slot="prepend-inner" :src="prependIconCallback()" height="28" width="28"></v-img> <!-- `../assets/${this.icn}.png`" -->
+                                  <v-img slot="prepend-inner" :src="prependIconCallback()" height="28" width="28"></v-img>
                                   </v-select>
                                 </v-col>
                                 <!-- Button um die Rechnung zu starten -->
@@ -75,7 +76,9 @@
                                 </v-col>
                               </v-row>
                             </v-container>
-                            {{this.result}}
+                            <span class="resultStyle" v-if="show" style="font-weight: bolder; font-size: 20px">
+                              {{this.betrag}} {{this.itemOne}} =  {{this.result}} {{this.itemSecond}}
+                            </span>
                         </v-form>
                     </div>
                 </div>
@@ -89,7 +92,7 @@ import axios from 'axios'
 export default {
     name: 'BitcoinUmrechner',
     data: () => ({
-        valid: false,
+        show: false,
         betrag: 0,
         betragRules: [
             v => !!v || 'Betrag is required',
@@ -114,7 +117,6 @@ export default {
         try {
             const resolve = await axios.get(`https://blockchain.info/ticker`)
             this.crypto = resolve.data;
-            console.log("CryptoNew", this.crypto.AUD)
             this.values.push(this.crypto.EUR.last),
             this.values.push(this.crypto.USD.last)
             this.values.push(this.crypto.AUD.last)
@@ -132,19 +134,18 @@ export default {
     methods: {
         prependIconCallback () {
           let name = this.itemSecond
-          let image= "../assets/" + name + ".png"
-          console.log("iMAGE", image);
+          // let image= "../assets/" + name + ".png"
 
           return require(`../assets/${name}.png`);
         },
          prependIconCallbackOne () {
           let name = this.itemOne
-          let image= "../assets/" + name + ".png"
-          console.log("iMAGE", image);
+          // let image= "../assets/" + name + ".png"
 
           return require(`../assets/${name}.png`);
         },
         betragRechner () {
+          this.show = true;
           this.result = this.betrag;
                 if(this.itemOne == 'EUR'){
                   this.result /= this.values[0]
@@ -165,5 +166,11 @@ export default {
 </script>
 
 <style scoped>
-
+.resultStyle{
+  font-size: 20px;
+}
+.v-application, .primary--text {
+    color: #FF8C00 !important;
+    caret-color: #FF8C00 !important;
+}
 </style>
